@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+html { scroll-behavior: smooth; }
+body { @apply bg-white text-grafito antialiased; }
+:focus-visible { outline: 3px solid #F26B21; outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { animation: none !important; } }
+@keyframes giro { from { transform: rotate(45deg) scale(.8); opacity: 0 } to { transform: rotate(45deg) scale(1); opacity: 1 } }
+.rombo { animation: giro .9s ease-out both; }
+
+/* Carrusel de proyectos: 3 copias de cada fila, se desplaza una copia (-33.33%) y reinicia sin saltos */
+@keyframes marquee-izq { to { transform: translateX(-33.3333%); } }
+@keyframes marquee-der { from { transform: translateX(-33.3333%); } to { transform: translateX(0); } }
+.marquee-pista { display: flex; width: max-content; animation: marquee-izq var(--dur, 75s) linear infinite; will-change: transform; }
+.marquee-pista.der { animation-name: marquee-der; }
+.marquee:hover .marquee-pista, .marquee:focus-within .marquee-pista, .pausa .marquee-pista { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .marquee { overflow-x: auto; }
+  .marquee-pista { animation: none; }
+  .marquee-pista .copia { display: none; }
+}
+
+.marquee-mascara { -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent); mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent); }
+
+/* Página Nosotros */
+@keyframes panelEntra { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.panel-entra { animation: panelEntra .5s ease both; }
+@keyframes flota { 0%, 100% { transform: rotate(45deg) translateY(0); } 50% { transform: rotate(45deg) translateY(-18px); } }
+.flota { transform: rotate(45deg); animation: flota 9s ease-in-out infinite; }
+.flota-b { transform: rotate(45deg); animation: flota 12s ease-in-out infinite reverse; }
+
+/* Brillo que cruza los botones principales */
+.brillo { position: relative; overflow: hidden; }
+.brillo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.35) 50%, transparent 70%); transform: translateX(-120%); transition: transform .7s ease; }
+.brillo:hover::after { transform: translateX(120%); }
+@media (prefers-reduced-motion: reduce) { .brillo::after { display: none; } }
+
+/* Maqueta de navegador que se "arma" sola y cursor de escritura */
+@keyframes sk { 0% { opacity: 0; transform: translateY(8px) scale(.98); } 14%, 86% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateY(-4px); } }
+.sk { animation: sk 8s ease-in-out infinite both; animation-delay: var(--d, 0s); }
+@keyframes caret { 50% { opacity: 0; } }
+.caret { animation: caret 1s steps(1) infinite; }
+
+/* Mensaje enviado: palomita que se dibuja y rombos que salen disparados */
+@keyframes trazo { to { stroke-dashoffset: 0; } }
+.trazo { stroke-dasharray: 60; stroke-dashoffset: 60; animation: trazo .6s .35s ease forwards; }
+.trazo-c { stroke-dasharray: 160; stroke-dashoffset: 160; animation: trazo .7s ease forwards; }
+@keyframes confeti { 0% { opacity: 1; transform: translate(0, 0) rotate(45deg) scale(.4); } 100% { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(225deg) scale(1); } }
+.confeti { opacity: 0; animation: confeti 1.2s .3s ease-out both; }
+@media (prefers-reduced-motion: reduce) { .trazo, .trazo-c { stroke-dashoffset: 0; } }
+
+/* Menú fijo: los enlaces a secciones dejan espacio arriba */
+html { scroll-padding-top: 5.5rem; }
