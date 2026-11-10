@@ -27,10 +27,10 @@ export default function Header() {
     return () => window.removeEventListener('scroll', f);
   }, []);
   // Transparente sobre la portada; al bajar se vuelve blanco y se queda fijo arriba.
-  const item = `${base} ${solido ? 'text-grafito hover:text-naranja' : 'text-white hover:text-naranja-claro'}`;
+  const item = `${base} text-grafito hover:text-naranja`;
   return (
     <>
-      <header className={`fixed inset-x-0 top-0 z-40 border-b transition-all duration-300 ${solido ? 'border-black/10 bg-white/95 shadow-md backdrop-blur' : 'border-white/25 bg-transparent'}`}>
+      <header className={`fixed inset-x-0 top-0 z-40 border-b transition-all duration-300 ${solido ? 'border-black/10 bg-white/95 shadow-md' : 'border-black/5 bg-white/80'} backdrop-blur-md`}>
         <nav aria-label="Principal" className={`flex items-center justify-between px-6 transition-all duration-300 lg:px-14 ${solido ? 'py-2' : 'py-4'}`}>
           <Link href="/" aria-label="Dynamedia, inicio">
             <Image src="/brand/logo-dynamedia.png" alt="Dynamedia" width={400} height={100} priority className={`h-auto transition-all duration-300 ${solido ? 'w-36 lg:w-44' : 'w-48 lg:w-60'}`} />
@@ -55,18 +55,18 @@ export default function Header() {
             <a href={FB} aria-label="Facebook" className={item}><Facebook size={18} /></a>
             <a href={WA} aria-label="WhatsApp" className={item}><MessageCircle size={20} /></a>
           </div>
-          <button aria-label={abierto ? 'Cerrar menú' : 'Abrir menú'} aria-expanded={abierto} onClick={() => setAbierto(!abierto)} className={`${solido ? 'text-grafito' : 'text-white'} lg:hidden`}>
+          <button aria-label={abierto ? 'Cerrar menú' : 'Abrir menú'} aria-expanded={abierto} onClick={() => setAbierto(!abierto)} className="text-grafito lg:hidden">
             {abierto ? <X size={30} /> : <Menu size={30} />}
           </button>
         </nav>
         {abierto && (
-          <div className="max-h-[75vh] overflow-y-auto bg-azul-oscuro px-6 pb-6 lg:hidden">
+          <div className="max-h-[75vh] overflow-y-auto bg-white/95 px-6 pb-6 backdrop-blur-md lg:hidden">
             {links.map((l) => (
               <div key={l.t}>
-                <Link href={l.h} onClick={() => setAbierto(false)} className={`${base} block py-3 text-white hover:text-naranja-claro`}>{l.t}</Link>
+                <Link href={l.h} onClick={() => setAbierto(false)} className={`${base} block py-3 text-grafito hover:text-naranja`}>{l.t}</Link>
                 {l.sub && (
-                  <ul className="mb-2 ml-3 space-y-1 border-l border-white/20 pl-4">
-                    {l.sub.map((s) => <li key={s.h}><Link href={s.h} onClick={() => setAbierto(false)} className="block py-1.5 text-sm text-white/80 hover:text-naranja-claro">{s.t}</Link></li>)}
+                  <ul className="mb-2 ml-3 space-y-1 border-l border-grafito/20 pl-4">
+                    {l.sub.map((s) => <li key={s.h}><Link href={s.h} onClick={() => setAbierto(false)} className="block py-1.5 text-sm text-grafito/70 hover:text-naranja">{s.t}</Link></li>)}
                   </ul>
                 )}
               </div>
